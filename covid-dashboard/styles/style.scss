@@ -2,3 +2,67 @@
   padding: 0;
   margin: 0;
 }
+
+:root {
+  font-size: 10px;
+}
+
+.header {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-column:first-child,
+.flex-column:last-child {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flex-column:nth-child(2) {
+  flex-grow: 2;
+  height: 100%;
+}
+
+.global-cases,
+.countries-list,
+.map,
+.countries-table,
+.diagram {
+  border: 1px solid #000;
+  background: grey;
+  margin: 0.5rem;
+}
+
+.global-cases,
+.countries-list {
+  max-width: 21rem;
+  min-width: 18rem;
+}
+
+.countries-table,
+.diagram {
+  max-width: 36rem;
+  min-width: 34rem;
+}
+
+.global-cases {
+  height: 5rem;
+}
+
+.countries-list,
+.countries-table {
+  height: 100%;
+}
+
+.diagram {
+  height: 10rem;
+}
+
