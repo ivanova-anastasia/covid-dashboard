@@ -5,6 +5,10 @@ export default class Table {
     this.table = document.querySelector('.countries-table');
   }
 
+  init() {
+    
+  }
+
   render() {
     const expander = new Expander(false).create();
     this.table.append(expander);
