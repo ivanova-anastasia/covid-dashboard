@@ -1,8 +1,11 @@
 import generateElement from '../utils/helper';
 import indicators from './common/indicators';
+import Expander from './common/expander';
 
 export default class List {
   constructor() {
+    this.list = document.querySelector('.countries-list');
+    // TODO: debug
     this.body = document.querySelector('body');
     this.searchElement = this.createSearchElement();
     this.body.append(this.searchElement);
@@ -10,7 +13,10 @@ export default class List {
     this.myInput = document.querySelector('.search__dropdown_content__input');
   }
 
-  render() {}
+  render() {
+    const expander = new Expander(false).create();
+    this.list.append(expander);
+  }
 
   createSearchElement() {
     const searchElement = generateElement('div', 'search');
