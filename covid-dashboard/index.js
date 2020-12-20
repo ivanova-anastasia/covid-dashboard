@@ -1,8 +1,9 @@
 import './styles/style.scss';
-import Diagram from './src/сomponents/diagram';
-import InteractiveMap from './src/сomponents/interactiveMap';
-import List from './src/сomponents/list';
-import Table from './src/сomponents/table';
+import Diagram from './src/components/diagram';
+import InteractiveMap from './src/components/interactiveMap';
+import List from './src/components/list';
+import Table from './src/components/table';
+import dashboardData from './src/api/dashboardData';
 
 const list = new List();
 const diagram = new Diagram();
@@ -13,3 +14,4 @@ list.render();
 diagram.render();
 map.render();
 table.render();
+dashboardData.init();
