@@ -17,7 +17,7 @@ export default {
 
   setCountry: function (country) {
     this.country = country;
-    this.updateDashboard();
+    this.updateDashboardCountry();
   },
   async updateDashboardCountry() {
     // TODO: implement custom event
