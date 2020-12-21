@@ -83,10 +83,6 @@ body {
   height: 5rem;
 }
 
-.countries-table {
-  height: 13rem;
-}
-
 .diagram {
   height: 10rem;
 }
@@ -314,4 +310,16 @@ body {
       }
     }
   }
+}
+
+.covidData-container__item {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgb(196, 192, 192);
+}
+
+.expanded .covidData-container__item {
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
 }
