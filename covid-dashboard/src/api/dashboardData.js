@@ -13,6 +13,7 @@ export default {
   init: async function () {
     await this.setGlobalInfo();
     await this.setCountries();
+    indicators.updateDashboardIndicators();
     // TODO: invoke custom event
   },
   setGlobalInfo: async function () {
@@ -39,11 +40,13 @@ export default {
     }
   },
   convertToSelectedUnitMeasure: function (value, population) {
-    return indicators.isAbsoluteValue ? value : (value / population) * 100000;
+    return indicators.isAbsoluteValue
+      ? value
+      : Math.floor((value / population) * 100000);
   },
   criterionMap: function (criterion, covidData) {
     let resultCount = 0;
-    switch (criterion) {
+    switch (Number(criterion)) {
       case CASES_INDICATOR:
         resultCount = indicators.isAllPeriod
           ? covidData.cases
@@ -84,7 +87,12 @@ export default {
     const countries = this.countries.slice(1);
     const newCountries = countries.reduce((accumulator, item) => {
       const count = this.criterionMap(indicators.criterion, item);
-      accumulator.push({ country: item.country, value: count });
+      if (!Number.isFinite(count)) return accumulator;
+      accumulator.push({
+        country: item.country,
+        value: count,
+        iso2: item.countryInfo.iso2,
+      });
       return accumulator;
     }, []);
     newCountries.sort((a, b) => b.value - a.value);

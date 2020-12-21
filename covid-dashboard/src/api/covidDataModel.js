@@ -20,7 +20,7 @@ export default class CovidDataModel {
     this.todayDeaths = this.validateNumber(data.todayDeaths);
     this.recovered = this.validateNumber(data.recovered);
     this.todayRecovered = this.validateNumber(data.todayRecovered);
-    this.population = this.validateNumber(data.todayRecovered);
+    this.population = this.validateNumber(data.population);
   }
 
   validateNumber(number) {
