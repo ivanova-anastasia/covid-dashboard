@@ -14,6 +14,8 @@ export default {
   selectElements: [],
   switchPeriodElements: [],
   switchValueElements: [],
+  indicatorAreaSet: [],
+  indicatorEvent: null,
 
   setCountry: function (country) {
     this.country = country;
@@ -22,8 +24,16 @@ export default {
   async updateDashboardCountry() {
     // TODO: implement custom event
   },
-  updateDashboardIndicators: function () {
-    // TODO: implement custom event
+  updateDashboardIndicators: function (element) {
+    if (!this.indicatorEvent) {
+      this.indicatorEvent = this.createCustomEvent('updateIndicators');
+    }
+    this.indicatorAreaSet.forEach((set) =>
+      set.dispatchEvent(this.indicatorEvent)
+    );
+  },
+  createCustomEvent: function (eventName) {
+    return new Event(eventName, { bubbles: true });
   },
   updateIndicatorElements: function () {
     this.selectElements.forEach((element) => {
@@ -44,9 +54,9 @@ export default {
   updateValueSwitchElements: function () {
     this.switchValueElements.forEach((element) => {
       const checkedElement = element;
-      checkedElement.querySelector('input').checked = this.isAllPeriod;
+      checkedElement.querySelector('input').checked = this.isAbsoluteValue;
       checkedElement.querySelector('.toggle__description').innerText = this
-        .isAllPeriod
+        .isAbsoluteValue
         ? 'absolute'
         : 'per 100,000';
     });
@@ -75,7 +85,7 @@ export default {
     selectElement.addEventListener('change', (event) => {
       this.criterion = event.target.value;
       this.updateIndicatorElements();
-      this.updateDashboardIndicators();
+      this.updateDashboardIndicators(event.target);
     });
     this.selectElements.push(selectElement);
     return selectElement;
@@ -107,18 +117,20 @@ export default {
     periodSwitchElement.addEventListener('change', (event) => {
       this.isAllPeriod = event.currentTarget.querySelector('input').checked;
       this.updatePeriodElements();
+      this.updateDashboardIndicators(event.target);
     });
     return periodSwitchElement;
   },
   createValueSwitchElement: function () {
     const valueSwitchElement = this.createSwitchElement(
-      this.isAllPeriod,
+      this.isAbsoluteValue,
       'absolute'
     );
     this.switchValueElements.push(valueSwitchElement);
     valueSwitchElement.addEventListener('change', (event) => {
-      this.isAllPeriod = event.currentTarget.querySelector('input').checked;
+      this.isAbsoluteValue = event.currentTarget.querySelector('input').checked;
       this.updateValueSwitchElements();
+      this.updateDashboardIndicators(event.target);
     });
     return valueSwitchElement;
   },
@@ -136,6 +148,7 @@ export default {
     }
     indicatorSet.appendChild(this.createPeriodSwitchElement());
     indicatorSet.appendChild(this.createValueSwitchElement());
+    this.indicatorAreaSet.push(indicatorSet);
     return indicatorSet;
   },
 };
