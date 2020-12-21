@@ -16,6 +16,9 @@ export default {
     indicators.updateDashboardIndicators();
     // TODO: invoke custom event
   },
+  getCountriesName: function () {
+    return this.country.map((item) => item.country);
+  },
   setGlobalInfo: async function () {
     try {
       const response = await fetch(`${DISEASE_HOST_NAME}/v3/covid-19/all`);
