@@ -8,6 +8,8 @@ export default class List {
 
   countrySearchListElement = null;
 
+  countryInputSearchElement = null;
+
   countries = [];
 
   countryNameElement = null;
@@ -52,9 +54,13 @@ export default class List {
     );
     inputElement.setAttribute('type', 'text');
     inputElement.setAttribute('placeholder', 'Search..');
-    inputElement.addEventListener('keyup', (event) => {
+    inputElement.addEventListener('input', (event) => {
       this.filterResults(event.target);
     });
+    inputElement.addEventListener('virtualKeyboard', (event) => {
+      this.filterResults(event.target);
+    });
+    this.countryInputSearchElement = inputElement;
     this.countrySearchListElement = contentElement;
     contentElement.append(inputElement);
     dropdownElement.append(countryButton, contentElement);
@@ -97,9 +103,11 @@ export default class List {
     }
   }
 
-  filterResults(targetElement) {
-    const filter = targetElement.value.toUpperCase();
-    const items = targetElement.parentElement.getElementsByTagName('a');
+  filterResults() {
+    const filter = this.countryInputSearchElement.value.toUpperCase();
+    const items = this.countryInputSearchElement.parentElement.getElementsByTagName(
+      'a'
+    );
     for (let i = 0; i < items.length; i += 1) {
       const txtValue = items[i].textContent || items[i].innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -172,7 +180,7 @@ export default class List {
   }
 
   addEventListenerIndicatorElements() {
-    this.indicatorSet.addEventListener('updateIndicators', (event) => {
+    this.indicatorSet.addEventListener('updateIndicators', () => {
       const countriesData = dashboardData.getCountriesWithCases();
       this.addCountriesToList(countriesData);
       this.addCountriesToSearchList(countriesData);
