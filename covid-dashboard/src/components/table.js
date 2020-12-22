@@ -46,4 +46,4 @@ export default class Table {
     this.covidDataContainer.innerHTML = '';
     this.covidDataContainer.append(covidDataItemCases, covidDataItemDeaths, covidDataItemRecover);
   }
-};
+}

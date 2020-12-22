@@ -6,6 +6,14 @@ import dashboardData from '../api/dashboardData';
 export default class List {
   countryListElement = null;
 
+  countrySearchListElement = null;
+
+  countryInputSearchElement = null;
+
+  countries = [];
+
+  countryNameElement = null;
+
   constructor() {
     this.list = document.querySelector('.countries-list');
     this.searchElement = this.createSearchElement();
@@ -32,6 +40,7 @@ export default class List {
       'search__dropdown_button__country-name',
       indicators.country
     );
+    this.countryNameElement = countryName;
     const iconDropDown = generateElement(
       'span',
       ['material-icons', 'search__dropdown_button__icon'],
@@ -45,45 +54,38 @@ export default class List {
     );
     inputElement.setAttribute('type', 'text');
     inputElement.setAttribute('placeholder', 'Search..');
-    inputElement.addEventListener('keyup', (event) => {
+    inputElement.addEventListener('input', (event) => {
       this.filterResults(event.target);
     });
-
-    const itemElement = generateElement(
-      'a',
-      'search__dropdown_content__item',
-      'Test'
-    );
-    itemElement.setAttribute('href', '#base');
-
-    const itemElement2 = generateElement(
-      'a',
-      'search__dropdown_content__item',
-      'Dog'
-    );
-    itemElement.setAttribute('href', '#dog');
-
-    contentElement.append(inputElement, itemElement, itemElement2);
+    inputElement.addEventListener('virtualKeyboard', (event) => {
+      this.filterResults(event.target);
+    });
+    this.countryInputSearchElement = inputElement;
+    this.countrySearchListElement = contentElement;
+    contentElement.append(inputElement);
     dropdownElement.append(countryButton, contentElement);
     searchElement.appendChild(dropdownElement);
 
     searchElement.addEventListener('click', (event) => {
       const targetElement = event.target;
-      if (
+      if (targetElement.classList.contains('search__dropdown_content__item')) {
+        indicators.setCountry(targetElement.text);
+        this.toggleSearchDropDownElement();
+        this.updateCountryName();
+      } else if (
         targetElement.classList.contains('search__dropdown_button') ||
         targetElement.parentElement.classList.contains(
           'search__dropdown_button'
         )
       ) {
         this.toggleSearchDropDownElement();
-      } else if (
-        targetElement.classList.contains('search__dropdown_content__item')
-      ) {
-        indicators.setCountry(targetElement.text);
-        this.toggleSearchDropDownElement();
       }
     });
     return searchElement;
+  }
+
+  updateCountryName() {
+    this.countryNameElement.innerText = indicators.country;
   }
 
   toggleSearchDropDownElement() {
@@ -101,9 +103,11 @@ export default class List {
     }
   }
 
-  filterResults(targetElement) {
-    const filter = targetElement.value.toUpperCase();
-    const items = targetElement.parentElement.getElementsByTagName('a');
+  filterResults() {
+    const filter = this.countryInputSearchElement.value.toUpperCase();
+    const items = this.countryInputSearchElement.parentElement.getElementsByTagName(
+      'a'
+    );
     for (let i = 0; i < items.length; i += 1) {
       const txtValue = items[i].textContent || items[i].innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -118,6 +122,16 @@ export default class List {
     const countryList = generateElement('div', 'countries-all');
     const ulElement = generateElement('ul', 'countries-all__list');
     this.countryListElement = ulElement;
+    countryList.addEventListener('click', (event) => {
+      let countryName = '';
+      if (event.target.childElementCount === 0) {
+        countryName = event.target.parentElement.lastElementChild.textContent;
+      } else {
+        countryName = event.target.lastElementChild.textContent;
+      }
+      indicators.setCountry(countryName);
+      this.updateCountryName();
+    });
     countryList.appendChild(ulElement);
     return countryList;
   }
@@ -145,6 +159,10 @@ export default class List {
     return wrapper;
   }
 
+  createCountrySearchItemElement(countryName) {
+    return generateElement('a', 'search__dropdown_content__item', countryName);
+  }
+
   addCountriesToList(countries) {
     const countryElements = countries.map((data) => {
       return this.createCountryItemElement(data.country, data.value, data.iso2);
@@ -153,11 +171,19 @@ export default class List {
     this.countryListElement.append(...countryElements);
   }
 
+  addCountriesToSearchList(countries) {
+    if (this.countrySearchListElement.childElementCount > 1) return;
+    const countryElements = countries.map((data) => {
+      return this.createCountrySearchItemElement(data.country);
+    });
+    this.countrySearchListElement.append(...countryElements);
+  }
+
   addEventListenerIndicatorElements() {
-    this.indicatorSet.addEventListener('updateIndicators', (event) => {
+    this.indicatorSet.addEventListener('updateIndicators', () => {
       const countriesData = dashboardData.getCountriesWithCases();
       this.addCountriesToList(countriesData);
-      const targetElement = event.target;
+      this.addCountriesToSearchList(countriesData);
     });
   }
 

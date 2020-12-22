@@ -3,6 +3,7 @@ $color-blocks: #222222;
 $color-border: #363636;
 $color-sub-border: #5c5c5c;
 $color-yellow: #ffc857;
+$color-yellow-focus: #ffd379;
 $color-red: #db3a34;
 $text-color: #ffffff;
 
@@ -233,7 +234,7 @@ body {
 
       &:hover,
       &:focus {
-        background-color: $color-red;
+        background-color: $color-yellow-focus;
       }
     }
     &_content {
@@ -244,6 +245,8 @@ body {
       min-width: 230px;
       border: 1px solid #ddd;
       z-index: 1;
+      max-height: 30vh;
+      overflow: auto;
 
       &_show {
         display: block;
@@ -269,6 +272,7 @@ body {
         text-decoration: none;
         display: block;
         font-size: 1.5rem;
+        color: $color-background;
 
         &:hover {
           background-color: #f1f1f1;
@@ -312,6 +316,7 @@ body {
   }
 }
 
+
 .covidData-container__item {
   font-size: 1.5rem;
   padding: 0.5rem;
@@ -323,3 +328,80 @@ body {
   text-align: center;
   padding: 1rem;
 }
+
+.keyboard {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 5px 0;
+  background: #004134;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  user-select: none;
+  transition: bottom 0.4s;
+  z-index: 3;
+
+  &__keys {
+    text-align: center;
+  }
+
+  &--hidden {
+    bottom: -100%;
+  }
+
+  &__key {
+    height: 45px;
+    width: 6%;
+    max-width: 90px;
+    margin: 3px;
+    border-radius: 4px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 1.5rem;
+    outline: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+
+    &:active {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    &-active {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    &--wide {
+      width: 12%;
+    }
+
+    &--extra-wide {
+      width: 36%;
+      max-width: 500px;
+    }
+
+    &--activatable::after {
+      content: '';
+      top: 10px;
+      right: 10px;
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+    }
+
+    &--active::after {
+      background: #08ff00;
+    }
+
+    &--dark {
+      background: rgba(0, 0, 0, 0.25);
+    }
+  }

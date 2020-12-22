@@ -17,14 +17,12 @@ export default {
   indicatorAreaSet: [],
   indicatorEvent: null,
 
-  setCountry: function (country) {
+  setCountry: async function (country) {
     this.country = country;
-    this.updateDashboardCountry();
+    // TODO: invoke api method
+    this.updateDashboardIndicators();
   },
-  async updateDashboardCountry() {
-    // TODO: implement custom event
-  },
-  updateDashboardIndicators: function (element) {
+  updateDashboardIndicators: function () {
     if (!this.indicatorEvent) {
       this.indicatorEvent = this.createCustomEvent('updateIndicators');
     }
