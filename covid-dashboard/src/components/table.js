@@ -9,4 +9,4 @@ export default class Table {
     const expander = new Expander(false).create();
     this.table.append(expander);
   }
-};
+}
