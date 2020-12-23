@@ -13,6 +13,7 @@ export default {
   init: async function () {
     await this.setGlobalInfo();
     await this.setCountries();
+    await this.setGlobalInfoCases();
     indicators.updateDashboardIndicators();
     // TODO: invoke custom event
   },
@@ -31,10 +32,20 @@ export default {
         `${DISEASE_HOST_NAME}/v3/covid-19/countries?yesterday=true`
       );
       const responseData = await response.json();
+      console.log(responseData);
       const countries = responseData.map(
         (model) => new CountryDataModel(model.country, model)
       );
       this.countries.push(...countries);
+      console.log(this.countries);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  setGlobalInfoCases: async function () {
+    try {
+      const response = await fetch(`${DISEASE_HOST_NAME}/v3/covid-19/historical/all?lastdays=366`);
+      const responseData = await response.json();
     } catch (err) {
       console.log(err);
     }

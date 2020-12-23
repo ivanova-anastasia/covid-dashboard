@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "chart.js": "^2.9.4",
     "material-components-web": "^8.0.0",
     "normalize.css": "^8.0.1"
   }
