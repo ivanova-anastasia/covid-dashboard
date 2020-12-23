@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COVID-20 MAP</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      href="https://cdn.bootcss.com/flag-icon-css/2.8.0/css/flag-icon.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">Covid-19 Dashboard</header>
+    <main class="main">
+      <div class="flex-container">
+        <div class="flex-column">
+          <div class="global-cases container"></div>
+          <div class="countries-list container"></div>
+        </div>
+        <div class="flex-column">
+          <div class="map container">
+            <div id="map"></div>
+            <div class="map-overlay" id="legend"></div>
+          </div>
+        </div>
+        <div class="flex-column">
+          <div class="countries-table container"></div>
+          <div class="diagram container"></div>
+        </div>
+      </div>
+    </main>
+    <audio data-key="en" src="assets/sounds/tink.wav"></audio>
+    <audio data-key="ru" src="assets/sounds/tom.wav"></audio>
+    <audio data-key="shift" src="assets/sounds/boom.wav"></audio>
+    <audio data-key="capsLock" src="assets/sounds/openhat.wav"></audio>
+    <audio data-key="backspace" src="assets/sounds/clap.wav"></audio>
+    <audio data-key="enter" src="assets/sounds/ride.wav"></audio>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
+  </body>
+</html>
