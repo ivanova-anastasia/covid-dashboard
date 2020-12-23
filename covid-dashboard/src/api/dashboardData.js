@@ -101,4 +101,21 @@ export default {
     newCountries.sort((a, b) => b.value - a.value);
     return newCountries;
   },
+  getCountriesWithLocation: function () {
+    const countries = this.countries.slice(1);
+    const newCountries = countries.reduce((accumulator, item) => {
+      const count = this.criterionMap(indicators.criterion, item);
+      if (!Number.isFinite(count)) return accumulator;
+      accumulator.push({
+        country: item.country,
+        value: count,
+        lat: item.countryInfo.lat,
+        long: item.countryInfo.long,
+        mode: indicators.criterion,
+      });
+      return accumulator;
+    }, []);
+    newCountries.sort((a, b) => b.value - a.value);
+    return newCountries;
+  },
 };

@@ -19,6 +19,8 @@ $text-color: #ffffff;
 body {
   background-color: $color-background;
   color: $text-color;
+  overflow-x: hidden;
+  margin-right: calc(-100vw - -100%);
 }
 
 .header {
@@ -404,4 +406,51 @@ body {
       background: rgba(0, 0, 0, 0.25);
     }
   }
+}
+
+#map {
+  height: 66vh;
+}
+
+.mapboxgl-popup {
+  max-width: 400px;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  color: $color-background;
+}
+
+.map-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 3px;
+}
+
+#features {
+  top: 0;
+  height: 100px;
+  margin-top: 20px;
+  width: 250px;
+}
+
+#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 18px;
+  height: fit-content;
+  top: 0;
+  margin-top: 20px;
+  color: $color-background;
+  font-size: 1.3rem;
+}
+
+.legend-key {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
 }
