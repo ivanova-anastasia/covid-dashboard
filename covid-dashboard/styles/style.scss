@@ -405,3 +405,12 @@ body {
     }
   }
 }
+
+#map {
+  height: 60vh;
+}
+.mapboxgl-popup {
+  max-width: 400px;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  color: $color-background;
+}

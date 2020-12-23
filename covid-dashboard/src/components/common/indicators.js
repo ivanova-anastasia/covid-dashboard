@@ -61,18 +61,22 @@ export default {
   },
   createSelectElement: function () {
     const selectElement = generateElement('select', 'criterion');
-    const casesOption = generateElement('option', 'criterion__option', 'Cases');
+    const casesOption = generateElement(
+      'option',
+      'criterion__option',
+      this.getCriterionNameByValue(CASES_INDICATOR)
+    );
     casesOption.value = CASES_INDICATOR;
     const deathsOption = generateElement(
       'option',
       'criterion__option',
-      'Deaths'
+      this.getCriterionNameByValue(DEATHS_INDICATOR)
     );
     deathsOption.value = DEATHS_INDICATOR;
     const recoveredOption = generateElement(
       'option',
       'criterion__option',
-      'Recovered'
+      this.getCriterionNameByValue(RECOVERED_INDICATOR)
     );
     recoveredOption.value = RECOVERED_INDICATOR;
 
@@ -148,5 +152,17 @@ export default {
     indicatorSet.appendChild(this.createValueSwitchElement());
     this.indicatorAreaSet.push(indicatorSet);
     return indicatorSet;
+  },
+  getCriterionNameByValue: function (value) {
+    switch (Number(value)) {
+      case CASES_INDICATOR:
+        return 'Cases';
+      case DEATHS_INDICATOR:
+        return 'Deaths';
+      case RECOVERED_INDICATOR:
+        return 'Recovered';
+      default:
+        return 'Criterion not found';
+    }
   },
 };
