@@ -1,6 +1,11 @@
 import Expander from './common/expander';
 import indicators from './common/indicators';
-import { MAP_BOX_ACCESS_TOKEN } from '../utils/constants';
+import {
+  MAP_BOX_ACCESS_TOKEN,
+  YELLOW_COLOR,
+  RED_COLOR,
+  BLUE_COLOR,
+} from '../utils/constants';
 import dashboardData from '../api/dashboardData';
 
 export default class InteractiveMap {
@@ -9,6 +14,7 @@ export default class InteractiveMap {
     this.indicatorSet = indicators.createIndicatorElements();
     this.addEventListenerIndicatorElements();
     this.map = this.createMap();
+    this.legend = document.querySelector('#legend');
   }
 
   render() {
@@ -72,6 +78,7 @@ export default class InteractiveMap {
     const thirdPartIndex = Math.floor((countriesData.length - 1) / 3);
     const lowestLevel = countriesData[thirdPartIndex * 2].value;
     const middleLevel = countriesData[thirdPartIndex].value;
+    this.addLegend(countriesData[0].value, middleLevel, lowestLevel);
 
     const featureCollection = countriesData.map((countryData) => {
       const feature = this.addFeatureProperty(
@@ -92,6 +99,30 @@ export default class InteractiveMap {
         features: featureCollection,
       },
     };
+  }
+
+  addLegend(maxLevel, middleLevel, lowestLevel) {
+    const layers = [
+      `${middleLevel}-${maxLevel}`,
+      `${lowestLevel}-${middleLevel}`,
+      `0-${lowestLevel}`,
+    ];
+    const colors = [RED_COLOR, YELLOW_COLOR, BLUE_COLOR];
+    this.legend.innerHTML = '';
+
+    layers.forEach((layer, index) => {
+      const color = colors[index];
+      const item = document.createElement('div');
+      const key = document.createElement('span');
+      key.className = 'legend-key';
+      key.style.backgroundColor = color;
+
+      const value = document.createElement('span');
+      value.innerHTML = layer;
+      item.appendChild(key);
+      item.appendChild(value);
+      this.legend.appendChild(item);
+    });
   }
 
   updateSource(countriesData) {
@@ -117,11 +148,11 @@ export default class InteractiveMap {
           'match',
           ['get', 'level'],
           'Yellow',
-          '#ffc857',
+          YELLOW_COLOR,
           'Red',
-          '#e55e5e',
+          RED_COLOR,
           'Blue',
-          '#3bb2d0',
+          BLUE_COLOR,
           /* other */ '#ccc',
         ],
       },
