@@ -19,6 +19,8 @@ $text-color: #ffffff;
 body {
   background-color: $color-background;
   color: $text-color;
+  overflow-x: hidden;
+  margin-right: calc(-100vw - -100%);
 }
 
 .header {
