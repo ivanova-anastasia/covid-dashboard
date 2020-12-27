@@ -10,10 +10,11 @@ import CountryDataModel from './countryDataModel';
 
 export default {
   countries: [],
+  dataset: [],
   init: async function () {
     await this.setGlobalInfo();
     await this.setCountries();
-    await this.setGlobalInfoCases();
+    await this.setGlobalCasesInfo();
     indicators.updateDashboardIndicators();
     // TODO: invoke custom event
   },
@@ -32,20 +33,22 @@ export default {
         `${DISEASE_HOST_NAME}/v3/covid-19/countries?yesterday=true`
       );
       const responseData = await response.json();
-      console.log(responseData);
       const countries = responseData.map(
         (model) => new CountryDataModel(model.country, model)
       );
       this.countries.push(...countries);
-      console.log(this.countries);
     } catch (err) {
       console.log(err);
     }
   },
-  setGlobalInfoCases: async function () {
+  setGlobalCasesInfo: async function () {
     try {
       const response = await fetch(`${DISEASE_HOST_NAME}/v3/covid-19/historical/all?lastdays=366`);
       const responseData = await response.json();
+      
+      this.dataset.push(Object.keys(responseData.cases));
+
+      console.log(this.dataset);
     } catch (err) {
       console.log(err);
     }
@@ -109,4 +112,16 @@ export default {
     newCountries.sort((a, b) => b.value - a.value);
     return newCountries;
   },
+  getCasesWithDates: function () {
+    console.log(this.dataset.length);
+    // const data = this.dataset.map((item) => console.log(item));
+    const chartDataset = this.dataset[0].reduce((accumulator, item, index) => {
+      accumulator.push({
+        x: item.toString(),
+        y: this.dataset[1][index]
+      });
+      return accumulator;
+    }, []);
+    return chartDataset;
+  }
 };

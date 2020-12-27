@@ -10,8 +10,8 @@ const diagram = new Diagram();
 const map = new InteractiveMap();
 const table = new Table();
 
+dashboardData.init();
 list.render();
 diagram.render();
 map.render();
 table.render();
-dashboardData.init();

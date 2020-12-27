@@ -28,7 +28,6 @@ export default class Table {
       const cases = dashboardData.getCountByFilter(CASES_INDICATOR);
       const deaths = dashboardData.getCountByFilter(DEATHS_INDICATOR);
       const recovered = dashboardData.getCountByFilter(RECOVERED_INDICATOR);
-      console.log(recovered);
       this.addCovidDataToTable(cases, deaths, recovered);
     });
   }
