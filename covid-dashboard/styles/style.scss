@@ -503,3 +503,31 @@ body {
   height: 10px;
   margin-right: 5px;
 }
+
+.wrapper {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer {
+  font-size: 2rem;
+  background-color: #222222;
+}
+
+.footer a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footer__link {
+  color: #fff;
+}
+
+.footer svg {
+  width: 10rem;
+  height: 10rem;
+}
