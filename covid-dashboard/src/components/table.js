@@ -7,6 +7,8 @@ import {
   DEATHS_INDICATOR,
   RECOVERED_INDICATOR,
   WHOLE_WORLD,
+  LOADING, 
+  UNKNOWN
 } from '../utils/constants';
 
 export default class Table {
@@ -16,10 +18,9 @@ export default class Table {
   }
 
   render() {
-    const expander = new Expander(false).create();
-    this.table.append(expander);
     this.covidDataContainer = generateElement('div', 'covidData-container', '');
-    this.table.append(this.covidDataContainer, this.indicatorSet);
+    this.table.append(this.covidDataContainer);
+    this.addCovidDataToTable(LOADING, LOADING, LOADING);
     this.addEventListenerIndicatorElements();
   }
 
@@ -34,16 +35,17 @@ export default class Table {
   }
 
   addCovidDataToTable(cases, deaths, recovered) {
-    const covidDataItemCases = generateElement(
-      'div', 'covidData-container__item', `Количество случаев заболевания - ${cases}`
-    );
-    const covidDataItemDeaths = generateElement(
-      'div', 'covidData-container__item', `Количество летальных исходов - ${deaths}`
-    );
-    const covidDataItemRecover = generateElement(
-      'div', 'covidData-container__item', `Количество выздоровевших - ${recovered}`
-    );
+    const covidDataItemCases = this.getTableItemElements('Coronavirus Cases', cases);
+    const covidDataItemDeaths = this.getTableItemElements('Deaths', deaths);
+    const covidDataItemRecover = this.getTableItemElements('Recovered', recovered);
     this.covidDataContainer.innerHTML = '';
-    this.covidDataContainer.append(covidDataItemCases, covidDataItemDeaths, covidDataItemRecover);
+    this.covidDataContainer.append(...covidDataItemCases, ...covidDataItemDeaths, ...covidDataItemRecover);
+  }
+
+  getTableItemElements(name, value) {
+    const covidDataItemName = generateElement('div', 'covidData-container__item_name', name || UNKNOWN);
+    const covidDataItemValue = generateElement('div', 'covidData-container__item_value', value || UNKNOWN);
+    const covidDataItemDots= generateElement('div', 'covidData-container__item_dots' || UNKNOWN);
+    return [covidDataItemName, covidDataItemValue, covidDataItemDots]
   }
 }

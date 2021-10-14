@@ -12,14 +12,16 @@ export default class InteractiveMap {
   constructor() {
     this.mapContainer = document.querySelector('.map');
     this.indicatorSet = indicators.createIndicatorElements();
-    this.addEventListenerIndicatorElements();
+    const expander = new Expander(false).create();
+    this.mapContainer.append(expander, this.indicatorSet);
     this.map = this.createMap();
     this.legend = document.querySelector('#legend');
+    this.addEventListenerIndicatorElements();
   }
 
   render() {
-    const expander = new Expander(false).create();
-    this.mapContainer.append(expander, this.indicatorSet);
+    // const expander = new Expander(false).create();
+    // this.mapContainer.append(expander, this.indicatorSet);
   }
 
   createMap() {
@@ -39,6 +41,12 @@ export default class InteractiveMap {
     this.indicatorSet.addEventListener('updateIndicators', () => {
       const countriesData = dashboardData.getCountriesWithLocation();
       this.updateSource(countriesData);
+    });
+    window.addEventListener('load', () => {
+      this.map.resize();
+    });
+    this.mapContainer.addEventListener('click', () => {
+      this.map.resize();
     });
   }
 

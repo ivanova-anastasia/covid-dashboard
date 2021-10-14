@@ -35,8 +35,7 @@ body {
 .flex-container {
   display: flex;
   justify-content: space-between;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 1rem 0.5rem;
   position: relative;
   @media screen and (max-width: 1140px) {
     flex-wrap: wrap;
@@ -48,33 +47,20 @@ body {
 .flex-column:last-child {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .flex-column:first-child {
+  flex-grow: 1;
   @media screen and (max-width: 855px) {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  @media screen and (max-width: 600px) {
     flex-direction: column;
   }
 }
 
 .flex-column:last-child {  
-  @media screen and (max-width: 1140px) {
-    flex-direction: row;
-    align-items: center;
+  width: 30%;
+  @media screen and (max-width: 855px) {
+    width: 100%;
   }
-  @media screen and (max-width: 600px) {
-    flex-direction: column;
-  }
-}
-
-.flex-column:nth-child(2) {
-  flex-grow: 1;
-  height: 100%;
 }
 
 .global-cases,
@@ -88,26 +74,31 @@ body {
 }
 
 .map {
-  margin: 0 0.5rem;
+  margin-right: 1rem;
+  height: 100%;
   @media screen and (max-width: 1140px) {
-    height: 45.9rem;
-    margin-right: 0.5rem;
+    height: 100%;
   }
   @media screen and (max-width: 855px) {
     height: auto;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
+  }
+
+  .indicators {
+    position: absolute;
+    bottom: 0;
+    background: $color-blocks;
   }
 }
 
 .global-cases,
 .countries-table {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .countries-table {
   @media screen and (max-width: 1140px) {
-    margin-top: 0.5rem;
-    margin-right: 0.5rem;
+    
   }
   @media screen and (max-width: 600px) {
     margin-right: 0;
@@ -118,8 +109,7 @@ body {
 .countries-list,
 .countries-table,
 .diagram {
-  max-width: 30rem;
-  min-width: 28rem;
+  min-width: 33rem;
 }
 
 .global-cases {
@@ -334,7 +324,7 @@ body {
 
 .countries-all {
   border: 1px solid #000;
-  height: 55vh;
+  height: 50vh;
   width: inherit;
 
   &__list {
@@ -352,24 +342,45 @@ body {
       }
 
       &__count {
-        padding-left: 13%;
+        width: 40%;
+        margin-left: 10%;
       }
 
       &__country {
-        margin-left: 20%;
+        width: 40%;
       }
 
       &__flag {
-        margin-left: 7%;
+        margin: 2% 8%;
+        width: 10%;
       }
     }
   }
 }
 
 .covidData-container__item {
-  font-size: 1.5rem;
-  padding: 0.5rem;
-  border-bottom: 1px solid rgb(196, 192, 192);
+
+  &_name, &_value, &_dots {
+    height:2rem;
+  }
+
+  &_name, &_value {
+    padding:1px 0.5rem;
+    color:#fff;
+    float:right;
+    font-size: 2rem;
+    background: $color-blocks;
+  }
+  
+  &_name {
+    float:left;
+    clear:both;
+  }
+
+  &_dots {
+    border-bottom: 1px dotted grey;
+    margin-bottom:1rem;
+  }
 }
 
 .expanded .covidData-container__item {
@@ -457,8 +468,9 @@ body {
 }
 
 #map {
-  height: 66vh;
-  min-width: 55rem;
+  height: 100%;
+  min-width: 30rem;
+  min-height: 55rem
 }
 
 .mapboxgl-popup {
