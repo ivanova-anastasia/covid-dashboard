@@ -10,16 +10,15 @@ import CountryDataModel from './countryDataModel';
 
 export default {
   countries: [],
-  init: async function () {
+  async init() {
     await this.setGlobalInfo();
     await this.setCountries();
     indicators.updateDashboardIndicators();
-    // TODO: invoke custom event
   },
-  getCountriesName: function () {
+  getCountriesName() {
     return this.country.map((item) => item.country);
   },
-  setGlobalInfo: async function () {
+  async setGlobalInfo() {
     try {
       const response = await fetch(`${DISEASE_HOST_NAME}/v3/covid-19/all`);
       const responseData = await response.json();
@@ -28,7 +27,7 @@ export default {
       console.log(err);
     }
   },
-  setCountries: async function () {
+  async setCountries() {
     try {
       const response = await fetch(
         `${DISEASE_HOST_NAME}/v3/covid-19/countries?yesterday=true`
@@ -42,12 +41,12 @@ export default {
       console.log(err);
     }
   },
-  convertToSelectedUnitMeasure: function (value, population) {
+  convertToSelectedUnitMeasure(value, population) {
     return indicators.isAbsoluteValue
       ? value
       : Math.floor((value / population) * 100000);
   },
-  criterionMap: function (criterion, covidData) {
+  criterionMap(criterion, covidData) {
     let resultCount = 0;
     switch (Number(criterion)) {
       case CASES_INDICATOR:
@@ -76,7 +75,7 @@ export default {
     return resultCount;
   },
 
-  getCountByFilter: function (
+  getCountByFilter(
     criterion = indicators.criterion,
     country = indicators.country
   ) {
@@ -86,7 +85,7 @@ export default {
     const countValue = this.criterionMap(criterion, countryCovidData);
     return countValue;
   },
-  getCountriesWithCases: function () {
+  getCountriesWithCases() {
     const countries = this.countries.slice(1);
     const newCountries = countries.reduce((accumulator, item) => {
       const count = this.criterionMap(indicators.criterion, item);
@@ -101,7 +100,7 @@ export default {
     newCountries.sort((a, b) => b.value - a.value);
     return newCountries;
   },
-  getCountriesWithLocation: function () {
+  getCountriesWithLocation() {
     const countries = this.countries.slice(1);
     const newCountries = countries.reduce((accumulator, item) => {
       const count = this.criterionMap(indicators.criterion, item);

@@ -11,17 +11,15 @@ import dashboardData from '../api/dashboardData';
 export default class InteractiveMap {
   constructor() {
     this.mapContainer = document.querySelector('.map');
-    this.indicatorSet = indicators.createIndicatorElements();
-    const expander = new Expander(false).create();
-    this.mapContainer.append(expander, this.indicatorSet);
-    this.map = this.createMap();
     this.legend = document.querySelector('#legend');
-    this.addEventListenerIndicatorElements();
+    this.map = this.createMap();
+    this.indicatorSet = indicators.createIndicatorElements();
   }
 
   render() {
-    // const expander = new Expander(false).create();
-    // this.mapContainer.append(expander, this.indicatorSet);
+    const expander = new Expander(false).create();
+    this.mapContainer.append(expander, this.indicatorSet);
+    this.addEventListenerIndicatorElements();
   }
 
   createMap() {
@@ -161,7 +159,7 @@ export default class InteractiveMap {
           RED_COLOR,
           'Blue',
           BLUE_COLOR,
-          /* other */ '#ccc',
+          '#ccc',
         ],
       },
     });
