@@ -8,3 +8,5 @@ export const MAP_BOX_ACCESS_TOKEN =
 export const YELLOW_COLOR = '#ffc857';
 export const RED_COLOR = '#e55e5e';
 export const BLUE_COLOR = '#3bb2d0';
+export const LOADING = 'Loading...';
+export const UNKNOWN = 'unknown';

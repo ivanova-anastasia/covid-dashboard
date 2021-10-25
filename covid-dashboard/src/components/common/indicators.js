@@ -17,12 +17,11 @@ export default {
   indicatorAreaSet: [],
   indicatorEvent: null,
 
-  setCountry: async function (country) {
+  async setCountry(country) {
     this.country = country;
-    // TODO: invoke api method
     this.updateDashboardIndicators();
   },
-  updateDashboardIndicators: function () {
+  updateDashboardIndicators() {
     if (!this.indicatorEvent) {
       this.indicatorEvent = this.createCustomEvent('updateIndicators');
     }
@@ -30,16 +29,16 @@ export default {
       set.dispatchEvent(this.indicatorEvent)
     );
   },
-  createCustomEvent: function (eventName) {
+  createCustomEvent(eventName) {
     return new Event(eventName, { bubbles: true });
   },
-  updateIndicatorElements: function () {
+  updateIndicatorElements() {
     this.selectElements.forEach((element) => {
       const selectElement = element;
       selectElement.selectedIndex = this.criterion;
     });
   },
-  updatePeriodElements: function () {
+  updatePeriodElements() {
     this.switchPeriodElements.forEach((element) => {
       const checkedElement = element;
       checkedElement.querySelector('input').checked = this.isAllPeriod;
@@ -49,7 +48,7 @@ export default {
         : 'today';
     });
   },
-  updateValueSwitchElements: function () {
+  updateValueSwitchElements() {
     this.switchValueElements.forEach((element) => {
       const checkedElement = element;
       checkedElement.querySelector('input').checked = this.isAbsoluteValue;
@@ -59,7 +58,7 @@ export default {
         : 'per 100,000';
     });
   },
-  createSelectElement: function () {
+  createSelectElement() {
     const selectElement = generateElement('select', 'criterion');
     const casesOption = generateElement(
       'option',
@@ -92,7 +91,7 @@ export default {
     this.selectElements.push(selectElement);
     return selectElement;
   },
-  createSwitchElement: function (indicator, text) {
+  createSwitchElement(indicator, text) {
     const switchWrapperElement = generateElement('div', 'toggle');
     const switchElement = generateElement('label', 'toggle__switch');
 
@@ -110,7 +109,7 @@ export default {
     switchWrapperElement.appendChild(textElement);
     return switchWrapperElement;
   },
-  createPeriodSwitchElement: function () {
+  createPeriodSwitchElement() {
     const periodSwitchElement = this.createSwitchElement(
       this.isAllPeriod,
       'all period'
@@ -123,7 +122,7 @@ export default {
     });
     return periodSwitchElement;
   },
-  createValueSwitchElement: function () {
+  createValueSwitchElement() {
     const valueSwitchElement = this.createSwitchElement(
       this.isAbsoluteValue,
       'absolute'
@@ -136,7 +135,7 @@ export default {
     });
     return valueSwitchElement;
   },
-  createIndicatorElements: function (includeCriterion = true) {
+  createIndicatorElements(includeCriterion = true) {
     const indicatorSet = generateElement('fieldset', 'indicators');
     const legendElement = generateElement(
       'legend',
@@ -153,7 +152,7 @@ export default {
     this.indicatorAreaSet.push(indicatorSet);
     return indicatorSet;
   },
-  getCriterionNameByValue: function (value) {
+  getCriterionNameByValue(value) {
     switch (Number(value)) {
       case CASES_INDICATOR:
         return 'Cases';

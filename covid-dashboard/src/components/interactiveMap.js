@@ -11,15 +11,15 @@ import dashboardData from '../api/dashboardData';
 export default class InteractiveMap {
   constructor() {
     this.mapContainer = document.querySelector('.map');
-    this.indicatorSet = indicators.createIndicatorElements();
-    this.addEventListenerIndicatorElements();
-    this.map = this.createMap();
     this.legend = document.querySelector('#legend');
+    this.map = this.createMap();
+    this.indicatorSet = indicators.createIndicatorElements();
   }
 
   render() {
     const expander = new Expander(false).create();
     this.mapContainer.append(expander, this.indicatorSet);
+    this.addEventListenerIndicatorElements();
   }
 
   createMap() {
@@ -39,6 +39,12 @@ export default class InteractiveMap {
     this.indicatorSet.addEventListener('updateIndicators', () => {
       const countriesData = dashboardData.getCountriesWithLocation();
       this.updateSource(countriesData);
+    });
+    window.addEventListener('load', () => {
+      this.map.resize();
+    });
+    this.mapContainer.addEventListener('click', () => {
+      this.map.resize();
     });
   }
 
@@ -153,7 +159,7 @@ export default class InteractiveMap {
           RED_COLOR,
           'Blue',
           BLUE_COLOR,
-          /* other */ '#ccc',
+          '#ccc',
         ],
       },
     });

@@ -19,8 +19,6 @@ $text-color: #ffffff;
 body {
   background-color: $color-background;
   color: $text-color;
-  overflow-x: hidden;
-  margin-right: calc(-100vw - -100%);
 }
 
 .header {
@@ -37,21 +35,32 @@ body {
 .flex-container {
   display: flex;
   justify-content: space-between;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 1rem 0.5rem;
   position: relative;
+  @media screen and (max-width: 1140px) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 .flex-column:first-child,
 .flex-column:last-child {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
-.flex-column:nth-child(2) {
+.flex-column:first-child {
   flex-grow: 1;
-  height: 100%;
+  @media screen and (max-width: 855px) {
+    flex-direction: column;
+  }
+}
+
+.flex-column:last-child {  
+  width: 30%;
+  @media screen and (max-width: 855px) {
+    width: 100%;
+  }
 }
 
 .global-cases,
@@ -60,30 +69,57 @@ body {
 .countries-table,
 .diagram {
   border: 1px solid $color-border;
-  //background: grey;
   background-color: $color-blocks;
   position: relative;
 }
 
 .map {
-  margin: 0 0.5rem;
+  margin-right: 1rem;
+  height: 100%;
+  @media screen and (max-width: 1140px) {
+    height: 100%;
+  }
+  @media screen and (max-width: 855px) {
+    height: auto;
+    margin: 1rem 0;
+  }
+
+  .indicators {
+    position: absolute;
+    bottom: 0;
+    background: $color-blocks;
+  }
 }
 
 .global-cases,
 .countries-table {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.countries-table {
+  @media screen and (max-width: 1140px) {
+    
+  }
+  @media screen and (max-width: 600px) {
+    margin-right: 0;
+  }
 }
 
 .global-cases,
 .countries-list,
 .countries-table,
 .diagram {
-  max-width: 30rem;
-  min-width: 28rem;
+  min-width: 33rem;
 }
 
 .global-cases {
   height: 5rem;
+  @media screen and (max-width: 855px) {
+    margin-right: 0.5rem;
+  }
+  @media screen and (max-width: 600px) {
+    margin-right: 0;
+  }
 }
 
 .diagram {
@@ -98,10 +134,11 @@ body {
   position: absolute;
   border-radius: 50%;
   top: -1rem;
-  right: -1rem;
+  right: 0;
   width: 2rem;
   height: 2rem;
   cursor: pointer;
+  z-index: 5;
 }
 
 .expand-image {
@@ -124,11 +161,11 @@ body {
   bottom: 0;
   right: 0;
   max-width: 100%;
-  height: 90vh;
+  min-height: 100%;
   z-index: 3;
   margin: 0 0.5rem;
 }
-// © https://www.w3schools.com/howto/howto_css_switch
+
 .toggle {
   display: flex;
   align-items: center;
@@ -209,7 +246,8 @@ body {
   background-color: $color-yellow;
 }
 
-.list-content {
+.expanded .list-content {
+  background-color: #222222;
   display: flex;
   padding-top: 10px;
   flex-direction: column;
@@ -286,7 +324,7 @@ body {
 
 .countries-all {
   border: 1px solid #000;
-  height: 55vh;
+  height: 50vh;
   width: inherit;
 
   &__list {
@@ -304,24 +342,45 @@ body {
       }
 
       &__count {
-        padding-left: 13%;
+        width: 40%;
+        margin-left: 10%;
       }
 
       &__country {
-        margin-left: 20%;
+        width: 40%;
       }
 
       &__flag {
-        margin-left: 7%;
+        margin: 2% 8%;
+        width: 10%;
       }
     }
   }
 }
 
 .covidData-container__item {
-  font-size: 1.5rem;
-  padding: 0.5rem;
-  border-bottom: 1px solid rgb(196, 192, 192);
+
+  &_name, &_value, &_dots {
+    height:2rem;
+  }
+
+  &_name, &_value {
+    padding:1px 0.5rem;
+    color:#fff;
+    float:right;
+    font-size: 2rem;
+    background: $color-blocks;
+  }
+  
+  &_name {
+    float:left;
+    clear:both;
+  }
+
+  &_dots {
+    border-bottom: 1px dotted grey;
+    margin-bottom:1rem;
+  }
 }
 
 .expanded .covidData-container__item {
@@ -347,7 +406,7 @@ body {
   }
 
   &--hidden {
-    bottom: -100%;
+    bottom: -150%;
   }
 
   &__key {
@@ -409,7 +468,9 @@ body {
 }
 
 #map {
-  height: 66vh;
+  height: 100%;
+  min-width: 30rem;
+  min-height: 55rem
 }
 
 .mapboxgl-popup {
@@ -453,4 +514,32 @@ body {
   width: 10px;
   height: 10px;
   margin-right: 5px;
+}
+
+.wrapper {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer {
+  font-size: 2rem;
+  background-color: #222222;
+}
+
+.footer a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footer__link {
+  color: #fff;
+}
+
+.footer svg {
+  width: 10rem;
+  height: 10rem;
 }

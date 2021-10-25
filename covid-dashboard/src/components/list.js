@@ -2,6 +2,7 @@ import generateElement from '../utils/helper';
 import indicators from './common/indicators';
 import Expander from './common/expander';
 import dashboardData from '../api/dashboardData';
+import { WHOLE_WORLD } from '../utils/constants';
 
 export default class List {
   countryListElement = null;
@@ -55,9 +56,6 @@ export default class List {
     inputElement.setAttribute('type', 'text');
     inputElement.setAttribute('placeholder', 'Search..');
     inputElement.addEventListener('input', (event) => {
-      this.filterResults(event.target);
-    });
-    inputElement.addEventListener('virtualKeyboard', (event) => {
       this.filterResults(event.target);
     });
     this.countryInputSearchElement = inputElement;
@@ -176,6 +174,7 @@ export default class List {
     const countryElements = countries.map((data) => {
       return this.createCountrySearchItemElement(data.country);
     });
+    countryElements.unshift(this.createCountrySearchItemElement(WHOLE_WORLD));
     this.countrySearchListElement.append(...countryElements);
   }
 
